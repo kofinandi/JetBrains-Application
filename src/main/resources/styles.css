@@ -1,0 +1,41 @@
+.code-area {
+    -fx-font-family: "JetBrains Mono", monospace; /* Optional: Use a better monospace font */
+    -fx-font-size: 14px;
+    -fx-background-color: #0d1117; /* Dark background (GitHub Dark) */
+    -fx-text-fill: #e6edf3; /* Light text color (GitHub Dark text) */
+}
+
+.code-area .caret {
+    -fx-stroke: #e6edf3 !important; /* Light cursor color */
+    -fx-opacity: 1.0;
+}
+
+/* Optional: Blinking cursor animation */
+.code-area .caret {
+    -fx-blinking: true;
+    -fx-blink-rate: 500ms; /* Adjust blink speed if needed */
+}
+
+/* Line numbers (dark text on light background) */
+.lineno {
+    -fx-background-color: #161b22; /* Slightly darker than code area */
+    -fx-text-fill: #8b949e; /* Light gray for line numbers */
+    -fx-font-weight: normal;
+}
+
+.code-area .text {
+    -fx-fill: #e6edf3; /* Light text (GitHub Dark) */
+}
+
+.keyword {
+    -fx-fill: #ff7b72 !important; /* GitHub Dark red for keywords */
+    -fx-font-weight: bold;
+}
+
+.string {
+    -fx-fill: #79c0ff !important;; /* GitHub Dark blue for strings */
+}
+
+.comment {
+    -fx-fill: #8b949e !important;; /* GitHub Dark gray for comments */
+}
