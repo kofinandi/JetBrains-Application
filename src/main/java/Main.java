@@ -16,9 +16,7 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import javax.swing.*;
 import java.io.*;
-import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -102,18 +100,7 @@ public class Main extends Application {
         root.setTop(controls);
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
-
-        if (Taskbar.isTaskbarSupported()) {
-            var taskbar = Taskbar.getTaskbar();
-
-            if (taskbar.isSupported(Feature.ICON_IMAGE)) {
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(getClass().getResource("/images/icon.png"));
-                taskbar.setIconImage(dockIcon);
-            }
-
-        }
-
+        
         primaryStage.setTitle("Kotlin Script Runner");
         primaryStage.setScene(new Scene(root, 1000, 700));
 
