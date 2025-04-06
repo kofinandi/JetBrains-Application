@@ -1,41 +1,118 @@
+@font-face {
+    font-family: "JetBrains Mono Medium";
+    src: url("fonts/JetBrainsMono-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "JetBrains Mono Bold";
+    src: url("fonts/JetBrainsMono-Bold.ttf") format("truetype");
+}
+
 .code-area {
-    -fx-font-family: "JetBrains Mono", monospace; /* Optional: Use a better monospace font */
-    -fx-font-size: 14px;
-    -fx-background-color: #0d1117; /* Dark background (GitHub Dark) */
-    -fx-text-fill: #e6edf3; /* Light text color (GitHub Dark text) */
+    -fx-background-color: #1f2023;
+    -fx-text-fill: #b3b6bb;
+    -fx-padding: 0px 10px;
 }
 
 .code-area .caret {
-    -fx-stroke: #e6edf3 !important; /* Light cursor color */
+    -fx-stroke: #e6edf3 !important;
     -fx-opacity: 1.0;
+    -fx-stroke-width: 5px;
 }
 
-/* Optional: Blinking cursor animation */
 .code-area .caret {
     -fx-blinking: true;
-    -fx-blink-rate: 500ms; /* Adjust blink speed if needed */
+    -fx-blink-rate: 500ms;
 }
 
-/* Line numbers (dark text on light background) */
 .lineno {
-    -fx-background-color: #161b22; /* Slightly darker than code area */
-    -fx-text-fill: #8b949e; /* Light gray for line numbers */
+    -fx-background-color: #1f2023;
+    -fx-text-fill: #8b949e;
     -fx-font-weight: normal;
+    -fx-border-color: #8b949e;
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-style: solid;
+    -fx-end-margin: 10px;
 }
 
 .code-area .text {
-    -fx-fill: #e6edf3; /* Light text (GitHub Dark) */
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
+    -fx-fill: #e6edf3;
+    -fx-background-color: #1f2023;
+}
+
+.output-area {
+    -fx-background-color: #1f2023;
+    -fx-text-fill: #b3b6bb;
+    -fx-padding: 0px 10px;
+}
+
+.output-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.output-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.output-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.split-pane {
+    -fx-background-color: #1f2023;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: #2b2d30; /* Change this to your desired color */
+}
+
+.controls {
+    -fx-background-color: #2b2d30;
+    -fx-border-color: #8b949e;
+    -fx-border-width: 0 0 3px 0;
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #e6edf3;
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #e6edf3;
+    -fx-border-width: 2px;
+}
+
+.button:hover {
+    -fx-background-color: #3a3c3e;
+}
+
+.button:pressed {
+    -fx-background-color: #2b2d30;
+}
+
+.stop-button {
+    -fx-border-color: #ff7b72 !important;
+    -fx-text-fill: #ff7b72 !important;
+}
+
+.status-label {
+    -fx-text-fill: #8b949e;
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
 }
 
 .keyword {
-    -fx-fill: #ff7b72 !important; /* GitHub Dark red for keywords */
-    -fx-font-weight: bold;
+    -fx-font-family: "JetBrains Mono Bold";
+    -fx-font-size: 14px;
+    -fx-fill: #ff7b72 !important;
 }
 
 .string {
-    -fx-fill: #79c0ff !important;; /* GitHub Dark blue for strings */
+    -fx-fill: #79c0ff !important;
 }
 
 .comment {
-    -fx-fill: #8b949e !important;; /* GitHub Dark gray for comments */
+    -fx-fill: #8b949e !important;
 }

@@ -1,11 +1,11 @@
-import atlantafx.base.theme.PrimerDark;
-import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import org.fxmisc.richtext.CodeArea;
@@ -15,8 +15,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import java.io.*;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.Collections;import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +24,7 @@ public class Main extends Application {
     private TextArea outputArea;
     private Label statusLabel;
     private Button runButton;
+    private Button stopButton;
     private Process currentProcess;
 
     // Kotlin keywords
@@ -53,8 +53,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-
         codeArea = new CodeArea();
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
 
@@ -67,22 +65,37 @@ public class Main extends Application {
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
 
+        Font jetbrains = Font.loadFont(getClass().getResourceAsStream("/fonts/JetBrainsMono-Medium.ttf"), 14);
         outputArea = new TextArea();
+        outputArea.getStyleClass().add("output-area");
         outputArea.setEditable(false);
+        outputArea.setFont(jetbrains);
+
 
         runButton = new Button("Run");
         runButton.setOnAction(e -> {runScript();});
+        runButton.getStyleClass().add("button");
+
+        stopButton = new Button("Stop");
+        stopButton.setOnAction(e -> stopScript());
+        stopButton.getStyleClass().add("button");
+        stopButton.getStyleClass().add("stop-button");
+        stopButton.setDisable(true);
 
         statusLabel = new Label("Ready");
+        statusLabel.getStyleClass().add("status-label");
 
-        HBox controls = new HBox(10, runButton, statusLabel);
+        HBox controls = new HBox(10, statusLabel, runButton, stopButton);
+        controls.getStyleClass().add("controls");
+        controls.setAlignment(Pos.BASELINE_RIGHT);
 
         SplitPane splitPane = new SplitPane(codeArea, outputArea);
+        splitPane.getStyleClass().add("split-pane");
         splitPane.setDividerPositions(0.5);
 
         BorderPane root = new BorderPane();
         root.setCenter(splitPane);
-        root.setBottom(controls);
+        root.setTop(controls);
 
         primaryStage.setTitle("Kotlin Script Runner");
         primaryStage.setScene(new Scene(root, 800, 600));
@@ -122,6 +135,7 @@ public class Main extends Application {
             ProcessBuilder builder = new ProcessBuilder("kotlin", scriptFile.getAbsolutePath());
             builder.redirectErrorStream(true);
             currentProcess = builder.start();
+            stopButton.setDisable(false);
 
             statusLabel.setText("Running...");
             outputArea.clear();
@@ -145,11 +159,20 @@ public class Main extends Application {
                     int exitCode = currentProcess.waitFor();
                     Platform.runLater(() -> {
                         statusLabel.setText("Finished with exit code: " + exitCode);
+                        stopButton.setDisable(true);
                     });
                 } catch (InterruptedException ignored) {}
             }).start();
         } catch (IOException e) {
             outputArea.appendText("Error starting process: " + e.getMessage() + "\n");
+        }
+    }
+
+    private void stopScript() {
+        if (currentProcess != null && currentProcess.isAlive()) {
+            currentProcess.destroy();
+            statusLabel.setText("Process stopped");
+            stopButton.setDisable(true);
         }
     }
 }
