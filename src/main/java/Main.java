@@ -48,11 +48,15 @@ public class Main extends Application {
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+    private static final String NUMBER_PATTERN = "\\b\\d+(\\.\\d+)?\\b";
+    private static final String FUNCTION_PATTERN = "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()";
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
                     + "|(?<STRING>" + STRING_PATTERN + ")"
                     + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
+                    + "|(?<NUMBER>" + NUMBER_PATTERN + ")"
+                    + "|(?<FUNCTION>" + FUNCTION_PATTERN + ")"
     );
 
     public static void main(String[] args) {
@@ -131,7 +135,9 @@ public class Main extends Application {
                     matcher.group("KEYWORD") != null ? "keyword" :
                             matcher.group("STRING") != null ? "string" :
                                     matcher.group("COMMENT") != null ? "comment" :
-                                            null; /* never happens */
+                                            matcher.group("NUMBER") != null ? "number" :
+                                                    matcher.group("FUNCTION") != null ? "function" :
+                                                            null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();

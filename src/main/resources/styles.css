@@ -121,3 +121,11 @@
 .comment {
     -fx-fill: #8b949e !important;
 }
+
+.number {
+    -fx-fill: #67a56f !important;
+}
+
+.function {
+    -fx-fill: #c6896a !important;
+}
