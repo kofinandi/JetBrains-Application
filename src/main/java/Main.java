@@ -11,6 +11,10 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 import javafx.scene.control.Hyperlink;
 
+import java.awt.Taskbar;
+import java.awt.Toolkit;
+import java.awt.Taskbar.Feature;
+
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -19,6 +23,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,13 +104,19 @@ public class Main extends Application {
         root.setCenter(splitPane);
         root.setTop(controls);
 
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
-        
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("icon.png"))));
+        if (Taskbar.isTaskbarSupported()) {
+            Taskbar taskbar = Taskbar.getTaskbar();
+            if (taskbar.isSupported(Feature.ICON_IMAGE)) {
+                taskbar.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
+            }
+        }
+
         primaryStage.setTitle("Kotlin Script Runner");
         primaryStage.setScene(new Scene(root, 1000, 700));
 
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
 
         primaryStage.show();
     }
