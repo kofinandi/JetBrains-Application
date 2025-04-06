@@ -43,19 +43,24 @@
 }
 
 .output-area {
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
     -fx-background-color: #1f2023;
     -fx-text-fill: #b3b6bb;
     -fx-padding: 0px 10px;
 }
 
-.output-area .scroll-pane {
-    -fx-background-color: transparent;
+.output-area .text {
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
+    -fx-fill: #e6edf3;
+    -fx-background-color: #1f2023;
 }
-.output-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-.output-area .scroll-pane .content{
-    -fx-background-color: transparent;
+
+.error-link {
+    -fx-text-fill: #ff7b72 !important;
+    -fx-font-family: "JetBrains Mono Medium";
+    -fx-font-size: 14px;
 }
 
 .split-pane {
